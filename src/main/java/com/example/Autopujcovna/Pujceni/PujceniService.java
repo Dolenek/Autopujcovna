@@ -26,18 +26,18 @@ public class PujceniService {
         return pujceniRepository.findByZakaznikId(zakaznikId);
     }
 
-    public Pujceni pujceniVozidla(Long vozidloId, Long customerId) {
+    public Pujceni pujceniVozidla(Long vozidloId, Long zakaznikId) {
         Vozidlo vozidlo = vozidloRepository.findById(vozidloId)
-                .orElseThrow(() -> new IllegalStateException("Vozidlo nenalezeno"));
+                .orElseThrow(() -> new IllegalStateException("Vozidlo s ID "+vozidloId+" neexistuje"));
         if (!vozidlo.getDostupnost()) {
             throw new IllegalStateException("Vozidlo je jiz pujceno");
         }
 
-        Zakaznik zakaznik = zakaznikRepository.findById(customerId)
-                .orElseThrow(() -> new IllegalStateException("Zakaznik nenalezen"));
+        Zakaznik zakaznik = zakaznikRepository.findById(zakaznikId)
+                .orElseThrow(() -> new IllegalStateException("zakaznik s ID "+zakaznikId+" neexistuje"));
 
         Pujceni pujceni = new Pujceni();
-        pujceni.setVozidlo(vozidlo);
+        pujceni.setVozidlo(vozidlo); //Aktualizujeme hodnoty pujčení
         pujceni.setZakaznik(zakaznik);
         pujceni.setDatumPujceni(LocalDateTime.now());
 
@@ -47,9 +47,9 @@ public class PujceniService {
         return pujceniRepository.save(pujceni);
     }
 
-    public Pujceni returnVozidlo(Long pujceniId) {
+    public Pujceni vratitVozidlo(Long pujceniId) {
         Pujceni pujceni = pujceniRepository.findById(pujceniId)
-                .orElseThrow(() -> new IllegalStateException("Pujceni nenalezeno"));
+                .orElseThrow(() -> new IllegalStateException("Pujceni s ID "+pujceniId+" neexistuje"));
 
         if (pujceni.getDatumVraceni() != null) {
             throw new IllegalStateException("Vozidlo bylo jiz vraceno");
@@ -65,15 +65,15 @@ public class PujceniService {
         return pujceni;
     }
 
-    public List<Pujceni> getPujceniHistoryByZakaznik(Long zakaznikId) {
+    public List<Pujceni> getHistoriePujceniPodleZakaznik(Long zakaznikId) {
         return pujceniRepository.findByZakaznikId(zakaznikId);
     }
 
-    public List<Pujceni> getPujceniHistoryByVozidlo(Long vozidloId) {
+    public List<Pujceni> getHistoriePujceniPodleVozidlo(Long vozidloId) {
         return pujceniRepository.findByVozidloId(vozidloId);
     }
 
-    public List<Pujceni> getVsechnaVypujcenaVozidla()
+    public List<Pujceni> getHistoriePujcek()
     {
         return pujceniRepository.findAll();
     }

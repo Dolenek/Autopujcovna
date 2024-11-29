@@ -1,15 +1,10 @@
 package com.example.Autopujcovna.Vozidlo;
 
-import com.example.Autopujcovna.Pujceni.Pujceni;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table
@@ -28,41 +23,23 @@ public class Vozidlo {
             generator = "vozidlo_sequence"
     )
 
+    @Schema(description = "Jedinečné ID vozidla", example = "1")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
 
     @NotBlank(message = "Značka je povinná")
     private String znacka;
     @NotBlank(message = "Model je povinný")
     private String model;
-
+    @NotBlank(message = "Barva je povinná")
     private String barva;
     @Min(value = 1886, message = "Neplatný rok výroby")
     private Integer rokVyroby;
-
+    @NotBlank(message = "Stav kilometrů je povinný")
     private Integer stavKilometru;
     private Boolean dostupnost;
 
-    @OneToMany(mappedBy = "vozidlo", cascade = CascadeType.ALL, orphanRemoval = true)
-    //@JsonIgnore
-    private List<Pujceni> pujceni = new ArrayList<>();
-
     public Vozidlo() {
-    }
-
-    public Vozidlo(Long id,
-                   String barva,
-                   String znacka,
-                   String model,
-                   Integer rokVyroby,
-                   Integer stavKilometru,
-                   Boolean dostupnost) {
-        this.id = id;
-        this.barva = barva;
-        this.znacka = znacka;
-        this.model = model;
-        this.rokVyroby = rokVyroby;
-        this.stavKilometru = stavKilometru;
-        this.dostupnost = dostupnost;
     }
 
     public Vozidlo(String znacka,
@@ -77,6 +54,15 @@ public class Vozidlo {
         this.rokVyroby = rokVyroby;
         this.stavKilometru = stavKilometru;
         this.dostupnost = dostupnost;
+    }
+
+    public Vozidlo(String znacka, String model, String barva, Integer rokVyroby, Integer stavKilometru)
+    {
+        this.znacka = znacka;
+        this.model = model;
+        this.barva = barva;
+        this.rokVyroby = rokVyroby;
+        this.stavKilometru = stavKilometru;
     }
 
     public Long getId() {
@@ -133,13 +119,5 @@ public class Vozidlo {
 
     public void setDostupnost(Boolean dostupnost) {
         this.dostupnost = dostupnost;
-    }
-
-    public List<Pujceni> getPujceni() {
-        return pujceni;
-    }
-
-    public void setPujceni(List<Pujceni> pujceni) {
-        this.pujceni = pujceni;
     }
 }

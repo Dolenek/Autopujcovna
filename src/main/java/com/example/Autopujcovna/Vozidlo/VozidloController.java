@@ -6,13 +6,15 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 @RestController
 @RequestMapping(path = "api/v1/vozidlo")
 @Tag(name = "Vozidlo", description = "API pro správu Vozidel")
-public class VozidloController {
+public class
+VozidloController {
 
     private final VozidloService vozidloService;
 
@@ -33,6 +35,7 @@ public class VozidloController {
     @PostMapping("/pridat")
     public void addNewVozidlo(@Valid @RequestBody Vozidlo vozidlo)
     {
+
         vozidloService.addNewVozidlo(vozidlo);
     }
 
@@ -52,5 +55,19 @@ public class VozidloController {
     public void deleteVozidlo(@PathVariable("vozidloId") Long vozidloId)
     {
         vozidloService.deleteVozidlo(vozidloId);
+    }
+
+    @Operation(summary = "Získá seznam všech nevypůjčených vozidel")
+    @GetMapping("/nevypujcena")
+    public List<Vozidlo> getNevypujcenaVozidla()
+    {
+        return vozidloService.getNevypujcenaVozidla();
+    }
+
+    @Operation(summary = "Získá seznam všech vypůjčených vozidel")
+    @GetMapping("/vypujcena")
+    public List<Vozidlo> getVypujcenaVozidla()
+    {
+        return vozidloService.getVypujcenaVozidla();
     }
 }

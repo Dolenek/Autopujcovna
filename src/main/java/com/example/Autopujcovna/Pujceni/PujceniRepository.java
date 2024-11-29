@@ -11,4 +11,8 @@ public interface PujceniRepository extends JpaRepository<Pujceni, Long> {
     List<Pujceni> findByZakaznikId(Long zakaznikId);
 
     List<Pujceni> findByVozidloId(Long vozidloId);
+
+    boolean existsByVozidlo_Id(Long vozidloId);
+
+    boolean existsByZakaznik_Id(Long zakaznikId);
 }

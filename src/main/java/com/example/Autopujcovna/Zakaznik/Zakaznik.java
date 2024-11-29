@@ -1,13 +1,10 @@
 package com.example.Autopujcovna.Zakaznik;
 
-import com.example.Autopujcovna.Pujceni.Pujceni;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.*;
-
-import java.util.ArrayList;
-import java.util.List;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 @Table
@@ -25,29 +22,19 @@ public class Zakaznik {
             generator = "zakaznik_sequence"
     )
     @Schema(description = "Jedinečné ID zákazníka", example = "1")
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
+
+    @NotBlank(message = "Jméno je povinné")
     private String jmeno;
+    @NotBlank(message = "Příjmení je povinné")
     private String prijmeni;
+    @NotBlank(message = "Email je povinný")
+    @Email
     private String email;
     private String telefon;
 
-    @OneToMany(mappedBy = "zakaznik", cascade = CascadeType.ALL, orphanRemoval = true)
-    //@JsonIgnore
-    private List<Pujceni> pujcky = new ArrayList<>();
-
     public Zakaznik() {
-    }
-
-    public Zakaznik(Long id,
-                    String jmeno,
-                    String prijmeni,
-                    String email,
-                    String telefon) {
-        this.id = id;
-        this.jmeno = jmeno;
-        this.prijmeni = prijmeni;
-        this.email = email;
-        this.telefon = telefon;
     }
 
     public Zakaznik(String jmeno,
@@ -98,13 +85,5 @@ public class Zakaznik {
 
     public void setTelefon(String telefon) {
         this.telefon = telefon;
-    }
-
-    public List<Pujceni> getPujcky() {
-        return pujcky;
-    }
-
-    public void setPujcky(List<Pujceni> pujcky) {
-        this.pujcky = pujcky;
     }
 }

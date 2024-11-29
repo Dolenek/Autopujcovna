@@ -4,6 +4,7 @@ import com.example.Autopujcovna.Vozidlo.Vozidlo;
 import com.example.Autopujcovna.Zakaznik.Zakaznik;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -22,37 +23,30 @@ public class Pujceni {
             generator = "pujceni_sequence"
     )
 
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Long id;
-
-    @ManyToOne
-    @JoinColumn(name = "vozidlo_id")
-    //@JsonIgnore
-    private Vozidlo vozidlo; //VOZIDLO ID JENOM
-
-    @ManyToOne
-    @JoinColumn(name = "zakaznik_id")
-    //@JsonIgnore
-    private Zakaznik zakaznik;
 
     private LocalDateTime datumPujceni;
     private LocalDateTime datumVraceni;
+
+    @ManyToOne
+    @JoinColumn(name = "vozidlo_id")
+    private Vozidlo vozidlo;
+
+    @ManyToOne
+    @JoinColumn(name = "zakaznik_id")
+    private Zakaznik zakaznik;
+
 
     public Pujceni() {
     }
 
     public Pujceni(Vozidlo vozidlo, Zakaznik zakaznik, LocalDateTime datumPujceni, LocalDateTime datumVraceni) {
         this.vozidlo = vozidlo;
-        this.zakaznik = zakaznik;
         this.datumPujceni = datumPujceni;
         this.datumVraceni = datumVraceni;
-    }
-
-    public Pujceni(Long id, Vozidlo vozidlo, Zakaznik zakaznik, LocalDateTime datumPujceni, LocalDateTime datumVraceni) {
-        this.id = id;
-        this.vozidlo = vozidlo;
         this.zakaznik = zakaznik;
-        this.datumPujceni = datumPujceni;
-        this.datumVraceni = datumVraceni;
     }
 
     public Long getId() {

@@ -17,4 +17,6 @@ public interface VozidloRepository extends JpaRepository<Vozidlo, Long> {
     List<Vozidlo> findVozidloByBarva(String barva);
 
     boolean existsVozidloById(Long id);
+
+    Vozidlo[] getByDostupnost(Boolean dostupnost);
 }

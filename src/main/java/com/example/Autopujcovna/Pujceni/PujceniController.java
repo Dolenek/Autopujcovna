@@ -27,32 +27,32 @@ public class PujceniController {
 
     @Operation(summary = "Půjčí vozidlo zákazníkovi")
     @PostMapping("/pujcit")
-    public Pujceni pujceniVozidla(@RequestParam Long vozidloId, @RequestParam Long customerId) {
-        return pujceniService.pujceniVozidla(vozidloId, customerId);
+    public Pujceni pujceniVozidla(@RequestParam Long vozidloId, @RequestParam Long zakaznikId) {
+        return pujceniService.pujceniVozidla(vozidloId, zakaznikId);
     }
 
-    @Operation(summary = "Vrátí vozidlo")
-    @PostMapping("/return")
-    public Pujceni returnVozidlo(@RequestParam Long rentalId) {
-        return pujceniService.returnVozidlo(rentalId);
+    @Operation(summary = "Vrátí půjčené vozidlo")
+    @PostMapping("/vratit")
+    public Pujceni vratitVozidlo(@RequestParam Long pujceniId) {
+        return pujceniService.vratitVozidlo(pujceniId);
     }
 
     @Operation(summary = "Získá historii zákazníka")
     @GetMapping("/zakaznik/{zakaznikId}")
     public List<Pujceni> getHistoriePujceniPodleZakaznik(@PathVariable Long zakaznikId) {
-        return pujceniService.getPujceniHistoryByZakaznik(zakaznikId);
+        return pujceniService.getHistoriePujceniPodleZakaznik(zakaznikId);
     }
 
     @Operation(summary = "Získá historii vozidla")
     @GetMapping("/vozidlo/{vozidloId}")
     public List<Pujceni> getHistoriePujceniPodleVozidlo(@PathVariable Long vozidloId) {
-        return pujceniService.getPujceniHistoryByVozidlo(vozidloId);
+        return pujceniService.getHistoriePujceniPodleVozidlo(vozidloId);
     }
 
-    @Operation(summary = "Získá seznam všech vypůjčených vozidel")
-    @GetMapping("vozidla")
-    public List<Pujceni> getVsechnaVypujcenaVozidla()
+    @Operation(summary = "Získá historii všech půjček")
+    @GetMapping("/historie/vozidla")
+    public List<Pujceni> getHistoriePujcek()
     {
-        return  pujceniService.getVsechnaVypujcenaVozidla();
+        return  pujceniService.getHistoriePujcek();
     }
 }

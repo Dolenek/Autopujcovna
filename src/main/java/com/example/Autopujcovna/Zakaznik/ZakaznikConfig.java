@@ -11,7 +11,7 @@ public class ZakaznikConfig {
 
     @Bean
     //                                  Access to Repo
-    CommandLineRunner commandLineRunner(ZakaznikRepository repository)
+    CommandLineRunner commandLineRunnerZakaznik(ZakaznikRepository zakaznikRepository)
     {
         return args -> {
             Zakaznik jakub = new Zakaznik(
@@ -23,9 +23,9 @@ public class ZakaznikConfig {
                     "Honza",
                     "Dolenek",
                     "honza.dolenek@seznam.cz",
-                    "123459789");
+                    "987654321");
 
-            repository.saveAll(List.of(honza,jakub));
+            zakaznikRepository.saveAll(List.of(honza,jakub));
         };
     }
 }

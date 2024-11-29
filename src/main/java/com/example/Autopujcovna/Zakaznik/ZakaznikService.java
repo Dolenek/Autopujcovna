@@ -1,5 +1,6 @@
 package com.example.Autopujcovna.Zakaznik;
 
+import com.example.Autopujcovna.Pujceni.PujceniRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,12 @@ public class ZakaznikService {
 
     private final ZakaznikRepository zakaznikRepository;
 
+    private final PujceniRepository pujceniRepository;
+
     @Autowired
-    public ZakaznikService(ZakaznikRepository zakaznikRepository) {
+    public ZakaznikService(ZakaznikRepository zakaznikRepository, PujceniRepository pujceniRepository) {
         this.zakaznikRepository = zakaznikRepository;
+        this.pujceniRepository = pujceniRepository;
     }
 
 
@@ -27,14 +31,16 @@ public class ZakaznikService {
     boolean emailIsTaken(Zakaznik zakaznik)
     {
         Optional<Zakaznik> zakaznikOptional = zakaznikRepository.findZakaznikByEmail(zakaznik.getEmail());
-        return zakaznikOptional.isEmpty();
+        if (zakaznikOptional.isPresent())
+            return true;
+        else return false;
     }
 
     public void addNewZakaznik(Zakaznik zakaznik) {
 
         if (emailIsTaken(zakaznik))
         {
-            throw new IllegalStateException("Email Taken");
+            throw new IllegalStateException("Email "+zakaznik.getEmail()+" již existuje");
         }
         zakaznikRepository.save(zakaznik);
     }
@@ -44,12 +50,18 @@ public class ZakaznikService {
         if (!exists){
             throw new IllegalStateException("Zákazník s ID " + zakaznikId + " neexistuje");
         }
+        exists = pujceniRepository.existsByZakaznik_Id(zakaznikId);
+        if (exists) //Pokud má zákazník nějakou půjčku tak vymaže i tu půjčku
+        {
+            pujceniRepository.deleteById(zakaznikId);
+        }
         zakaznikRepository.deleteById(zakaznikId);
+
     }
 
 
     @Transactional
-    public void updateZakaznik(Long zakaznikId, String jmeno, String email) {
+    public void updateZakaznik(Long zakaznikId, String jmeno, String email, String telefon) {
 
         //Najde zákazníka s ID a pokud takové ID neexistuje tak vyhodí error
         Zakaznik zakaznik = zakaznikRepository.findById(zakaznikId)
@@ -67,7 +79,10 @@ public class ZakaznikService {
 
             zakaznik.setEmail(email);
         }
-
+        if(telefon != null && !telefon.isEmpty() && !Objects.equals(zakaznik.getTelefon(), telefon))
+        {
+            zakaznik.setTelefon(email);
+        }
 
     }
 }

@@ -35,7 +35,6 @@ public class ZakaznikController {
     public void addNewZakaznik(@Valid @RequestBody Zakaznik zakaznik)
     {
         zakaznikService.addNewZakaznik(zakaznik);
-        //return new ResponseEntity<>(novyZakaznik, HttpStatus.CREATED);
     }
 
     @Operation(summary = "Pomocí ID odstraní zákazníka ze seznamu")
@@ -50,8 +49,9 @@ public class ZakaznikController {
     public void updateZakaznik(
             @PathVariable("zakaznikId") Long zakaznikId,
             @RequestParam(required = false) String jmeno,
-            @RequestParam(required = false) String email){
-        zakaznikService.updateZakaznik(zakaznikId, jmeno, email);
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) String telefon){
+        zakaznikService.updateZakaznik(zakaznikId, jmeno, email, telefon);
     }
 
     @Operation(summary = "Získá historii všech půjčených aut od zákazníka")

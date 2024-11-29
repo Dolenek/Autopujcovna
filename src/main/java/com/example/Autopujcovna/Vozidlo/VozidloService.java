@@ -1,10 +1,12 @@
 package com.example.Autopujcovna.Vozidlo;
 
+import com.example.Autopujcovna.Pujceni.PujceniRepository;
 import com.example.Autopujcovna.Zakaznik.Zakaznik;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -13,9 +15,12 @@ public class VozidloService {
 
     private final VozidloRepository vozidloRepository;
 
+    private final PujceniRepository pujceniRepository;
+
     @Autowired
-    public VozidloService(VozidloRepository vozidloRepository) {
+    public VozidloService(VozidloRepository vozidloRepository, PujceniRepository pujceniRepository) {
         this.vozidloRepository = vozidloRepository;
+        this.pujceniRepository = pujceniRepository;
     }
 
     public List<Vozidlo> getVozidla() {
@@ -23,6 +28,7 @@ public class VozidloService {
     }
 
     public void addNewVozidlo(Vozidlo vozidlo) {
+
         vozidloRepository.save(vozidlo);
     }
 
@@ -50,6 +56,21 @@ public class VozidloService {
         {
             throw new IllegalStateException("Vozidlo s ID "+vozidloId+" neexistuje");
         }
+        exists = pujceniRepository.existsByVozidlo_Id(vozidloId);
+        if (exists) //Pokud je vozidlo vypůjčené tak vymaže i půjčku
+        {
+            pujceniRepository.deleteById(vozidloId);
+        }
         vozidloRepository.deleteById(vozidloId);
+    }
+
+    public List<Vozidlo> getNevypujcenaVozidla()
+    {
+        return vozidloRepository.findVozidloByDostupnost(true);
+    }
+
+    public List<Vozidlo> getVypujcenaVozidla()
+    {
+        return vozidloRepository.findVozidloByDostupnost(false);
     }
 }
