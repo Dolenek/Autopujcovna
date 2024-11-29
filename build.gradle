@@ -18,15 +18,23 @@ repositories {
 }
 
 dependencies {
+	// Základní závislosti pro aplikaci
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.6.0'
+	implementation 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
+	//testy
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-	compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.30'
 }
 
 tasks.named('test') {
 	useJUnitPlatform()
+	testLogging {
+		events "passed", "skipped", "failed"
+	}
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
 }

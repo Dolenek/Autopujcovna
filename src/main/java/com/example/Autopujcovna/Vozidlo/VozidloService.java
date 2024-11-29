@@ -1,12 +1,10 @@
 package com.example.Autopujcovna.Vozidlo;
 
 import com.example.Autopujcovna.Pujceni.PujceniRepository;
-import com.example.Autopujcovna.Zakaznik.Zakaznik;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,9 +25,8 @@ public class VozidloService {
         return vozidloRepository.findAll();
     }
 
-    public void addNewVozidlo(Vozidlo vozidlo) {
-
-        vozidloRepository.save(vozidlo);
+    public Vozidlo addNewVozidlo(Vozidlo vozidlo) {
+        return vozidloRepository.save(vozidlo);
     }
 
     @Transactional

@@ -35,7 +35,6 @@ VozidloController {
     @PostMapping("/pridat")
     public void addNewVozidlo(@Valid @RequestBody Vozidlo vozidlo)
     {
-
         vozidloService.addNewVozidlo(vozidlo);
     }
 
