@@ -94,7 +94,7 @@ cd autopujcovna</code></pre>
 <ul>
     <li>
         <code>POST /api/v1/pujceni/pujcit</code><br>
-        Půjčí vozidlo zákazníkovi., <code>zakaznikId (Long)</code>
+        Půjčí vozidlo zákazníkovi.
     </li>
     <li>
         <code>POST /api/v1/pujceni/vratit</code><br>
