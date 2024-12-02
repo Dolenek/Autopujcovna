@@ -1,7 +1,7 @@
 package com.example.Autopujcovna.Pujceni;
 
 import com.example.Autopujcovna.Vozidlo.VozidloRepository;
-import com.example.Autopujcovna.Zakaznik.ZakaznikRepository;
+import com.example.Autopujcovna.ZakaznikTest.ZakaznikRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;

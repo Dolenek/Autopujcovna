@@ -2,8 +2,8 @@ package com.example.Autopujcovna.Pujceni;
 
 import com.example.Autopujcovna.Vozidlo.Vozidlo;
 import com.example.Autopujcovna.Vozidlo.VozidloRepository;
-import com.example.Autopujcovna.Zakaznik.Zakaznik;
-import com.example.Autopujcovna.Zakaznik.ZakaznikRepository;
+import com.example.Autopujcovna.ZakaznikTest.Zakaznik;
+import com.example.Autopujcovna.ZakaznikTest.ZakaznikRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;

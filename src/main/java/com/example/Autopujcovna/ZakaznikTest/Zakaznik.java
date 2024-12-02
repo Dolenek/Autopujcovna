@@ -1,4 +1,4 @@
-package com.example.Autopujcovna.Zakaznik;
+package com.example.Autopujcovna.ZakaznikTest;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;

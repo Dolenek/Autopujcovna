@@ -44,6 +44,8 @@ public class VozidloService {
         }
 
         vozidlo.setStavKilometru(stavKilometru);
+
+        vozidloRepository.save(vozidlo);
     }
 
     public void deleteVozidlo(Long vozidloId)

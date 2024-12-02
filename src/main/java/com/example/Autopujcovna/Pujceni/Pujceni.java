@@ -1,9 +1,7 @@
 package com.example.Autopujcovna.Pujceni;
 
 import com.example.Autopujcovna.Vozidlo.Vozidlo;
-import com.example.Autopujcovna.Zakaznik.Zakaznik;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.Autopujcovna.ZakaznikTest.Zakaznik;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 

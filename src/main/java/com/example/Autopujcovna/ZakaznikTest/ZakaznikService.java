@@ -1,4 +1,4 @@
-package com.example.Autopujcovna.Zakaznik;
+package com.example.Autopujcovna.ZakaznikTest;
 
 import com.example.Autopujcovna.Pujceni.PujceniRepository;
 import jakarta.transaction.Transactional;
